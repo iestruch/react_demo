@@ -1,39 +1,30 @@
-import React, { Component } from 'react';
-import { NICE, SUPER_NICE } from './colors';
+import React from 'react';
 
-class Counter extends Component {
+import mui, {AppBar} from 'material-ui';
+import CustomTheme from './theme';
+
+let ThemeManager = mui.Styles.ThemeManager;
+
+
+export class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { counter: 0 };
-    this.interval = setInterval(() => this.tick(), 1000);
   }
 
-  tick() {
-    this.setState({
-      counter: this.state.counter + this.props.increment
-    });
+  static get childContextTypes() {
+  	return { muiTheme: React.PropTypes.object };
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
+  getChildContext() {
+        return { muiTheme: ThemeManager.getMuiTheme(CustomTheme) };
   }
 
   render() {
     return (
-      <h1 style={{ color: this.props.color }}>
-        Counter ({this.props.increment}): {this.state.counter}
-      </h1>
-    );
-  }
-}
-
-export class App extends Component {
-  render() {
-    return (
-      <div>
-        <Counter increment={1} color={NICE} />
-        <Counter increment={5} color={SUPER_NICE} />
-      </div>
+    	<div>
+        <AppBar title="Test" />
+			  <h1>With Material UI</h1>
+		  </div>
     );
   }
 }
