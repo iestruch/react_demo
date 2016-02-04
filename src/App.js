@@ -1,12 +1,27 @@
 import React from 'react';
 
-import mui, {AppBar} from 'material-ui';
+/** react-router routes */
+import Root from './Routes';
+
+/** components */
+import SideNav from './components/SideNav/SideNav';
+import Layout from './containers/Layout/Layout';
+
+/** material ui */
+import mui, {AppBar,} from 'material-ui';
 import CustomTheme from './theme';
-
 let ThemeManager = mui.Styles.ThemeManager;
+//Needed for onTouchTap
+//Can go away when react 1.0 release
+//Check this repo:
+//https://github.com/zilverline/react-tap-event-plugin
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
+/** styles */
+require('./App.sass');
 
-export class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -22,9 +37,10 @@ export class App extends React.Component {
   render() {
     return (
     	<div>
-        <AppBar title="Test" />
-			  <h1>With Material UI</h1>
-		  </div>
+        <Layout>
+          {this.props.children}
+        </Layout>
+      </div>
     );
   }
 }
